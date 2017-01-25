@@ -47,5 +47,13 @@
 		VIPSocket.on('adminJoined', (msg) => {
 			console.log(msg);
 		});
+		emit4.setAttribute('disabled', 'disabled');
+	}, false);
+
+	const emit5 = document.getElementById('emitWithAck');
+	emit5.addEventListener('click', () => {
+		socket.emit('emitWithAck', 'interesting data from frontend', (dataFromBackend) => {
+			console.log(dataFromBackend);
+		});
 	}, false);
 })();

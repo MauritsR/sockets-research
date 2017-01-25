@@ -12,7 +12,11 @@ function onConnection(socket) {
 	socket.broadcast.emit('newConnection', 'hi! Someone else has connected!');
 	socket.on('emitMsgBack', (data) => socket.emit('emitMsgBack', `This was your message: ${data}`));
 	socket.on('emitToOthers', (data) => socket.broadcast.emit('emitToOthers', `This was your message: ${data}`));
-	socket.on('disconnect', () => socket.broadcast.emit('disconnectedClient', 'hi! Someone has disconnected!'))
+	socket.on('disconnect', () => socket.broadcast.emit('disconnectedClient', 'hi! Someone has disconnected!'));
+	socket.on('emitWithAck', (data, fn) => {
+		console.log('this line is executed in the backend');
+		fn(`this line is executed in the frontend, with this string as an argument, with ${data} or backend if necessary`);
+	})
 }
 io.on('connection', onConnection);
 
@@ -26,6 +30,5 @@ function onVIPConnection(socket) {
 }
 const VIP = io.of('/VIP'); // Declare the custom namespace (unrelated to the URL)
 VIP.on('connection', onVIPConnection);
-
 
 http.listen(port, () => console.log('listening on port ' + port));

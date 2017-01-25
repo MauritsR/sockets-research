@@ -65,43 +65,19 @@ socket.emit('chat message', 'Wooh Awesomeeee');
 socket.on('chat message', msg => chatArray.push(msg));</code></pre>
 		</section>
 		<section>
-			<h2>Server API</h2>
-			<p>sending to the client</p>
-			<pre><code class="javascript">socket.emit('hello', 'can you hear me?', 1, 2, 'abc');</code></pre>
-			<p>sending to all clients except sender</p>
-			<pre><code>socket.broadcast.emit('broadcast', 'hello friends!');</code></pre>
-			<p>sending to all clients in 'game' room except sender</p>
-			<pre><code>socket.to('game').emit('nice game', "let's play a game");</code></pre>
+			<h2>Multiplexing</h2>
+			<p>Sending multiple streams of data over a communications link at the same time in the form of a single, complex signal.
+				By default, multiplex = true.
+				Calling io instantiates a Manager and returns a socket.</p>
 		</section>
 		<section>
-			<h2>Server API</h2>
-			<pre><code class="javascript">// sending to all clients in 'game1' and/or in 'game2' room, except sender
-socket.to('game1').to('game2').emit('nice game', "let's play a game (too)");
-
-// sending to all clients in 'game' room, including sender
-io.in('game').emit('big-announcement', 'the game will start soon');
-
-// sending to all clients in namespace 'myNamespace', including sender
-io.of('myNamespace').emit('bigger-announcement', 'the tournament will start soon');</code></pre>
-		</section>
-		<section>
-			<h2>Server API</h2>
-			<pre><code class="javascript">// sending to individual socketid (private message)
-socket.to(<socketid>).emit('hey', 'I just met you');
-
-// sending with acknowledgement
-socket.emit('question', 'do you think so?', function (answer) {});
-
-// sending without compression
-socket.compress(false).emit('uncompressed', "that's rough");</code></pre>
-		</section>
-		<section>
-			<h2>Server API</h2>
-			<pre><code class="javascript">// sending a message that might be dropped if the client is not ready to receive messages
-socket.volatile.emit('maybe', 'do you really need it?');
-
-// sending to all clients on this node (when using multiple nodes)
-io.local.emit('hi', 'my lovely babies');</code></pre>
+			<h2>Socket id</h2>
+			<p>An unique identifier for the socket session.
+				Set after the connect event is triggered, and updated after the reconnect event.
+			</p>
+			<p>
+				Example: 8CBxbt3PrTv2yR2sAAAC
+			</p>
 		</section>
 	</div>
 </div>
