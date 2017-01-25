@@ -7,6 +7,12 @@
 	var colors = document.getElementsByClassName('color');
 	var context = canvas.getContext('2d');
 
+	const emitToOthers = () => {
+		console.log('emittt');
+	};
+	const emit1 = document.getElementById('socket1');
+	emit1.addEventListener('click', emitToOthers, false);
+
 	var current = {
 		color: 'black'
 	};
