@@ -7,9 +7,12 @@
 </head>
 <body>
 
-<p>Send message to everyone except myself</p>
-<button id="socket1">send</button>
-<div class="socket"></div>
+<div class="buttons">
+	<button id="emitMsgBack">SEND 'foo' BACK TO ME</button>
+	<button id="emitToOthers">SEND 'coolbeans' TO THE OTHER CLIENTS</button>
+	<button id="connectToVIP">CONNNECT TO VIP NAMESPACE</button>
+	<button id="connectToAdminVIP" disabled="true">CONNNECT TO ADMIN ROOM IN VIP NAMESPACE</button>
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/main.js"></script>
