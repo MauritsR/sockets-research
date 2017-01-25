@@ -11,8 +11,97 @@
 	<div class="slides">
 		<section>
 			<h2>Socket.io</h2>
-			<pre><code class="hljs">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
-			<p>The above is some great code</p>
+			<blockquote>
+				&ldquo;Socket.IO is an engine that enables real-time bidirectional event-based communication. &rdquo;
+			</blockquote>
+			<img class="plain" style="width: 100px" src="https://www.pubnub.com/wp-content/uploads/2014/07/SOCKETIOICON.gif"/>
+		</section>
+		<section>
+			<h2>Background information</h2>
+			<ul>
+				<li class="fragment">Open source</li>
+				<li class="fragment">Run by contributors</li>
+				<li class="fragment">December 2016, v1.7.2</li>
+			</ul>
+		</section>
+		<section>
+			<h2>Possibilities with sockets</h2>
+			<ul>
+				<li class="fragment">Real-time data feed</li>
+				<li class="fragment">Instant messaging</li>
+				<li class="fragment">Send images, audio and video</li>
+				<li class="fragment">Concurrently edit documents</li>
+			</ul>
+		</section>
+		<section>
+			<h2>Server code</h2>
+			<pre><code class="hljs">var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
+
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
+});
+
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});</code></pre>
+		</section>
+		<section>
+			<h2>Client code</h2>
+			<p>index.html</p>
+			<pre><code class="hljs"><script src="https://cdn.socket.io/socket.io-1.2.0.js"></script></code></pre>
+			<p>app.js</p>
+			<pre><code class="hljs">const socket = io();
+// Emit code to backend
+socket.emit('chat message', 'Wooh Awesomeeee');
+// Process data from the backend
+socket.on('chat message', msg => chatArray.push(msg));</code></pre>
+		</section>
+		<section>
+			<h2>Server API</h2>
+			<p>sending to the client</p>
+			<pre><code class="javascript">socket.emit('hello', 'can you hear me?', 1, 2, 'abc');</code></pre>
+			<p>sending to all clients except sender</p>
+			<pre><code>socket.broadcast.emit('broadcast', 'hello friends!');</code></pre>
+			<p>sending to all clients in 'game' room except sender</p>
+			<pre><code>socket.to('game').emit('nice game', "let's play a game");</code></pre>
+		</section>
+		<section>
+			<h2>Server API</h2>
+			<pre><code class="javascript">// sending to all clients in 'game1' and/or in 'game2' room, except sender
+socket.to('game1').to('game2').emit('nice game', "let's play a game (too)");
+
+// sending to all clients in 'game' room, including sender
+io.in('game').emit('big-announcement', 'the game will start soon');
+
+// sending to all clients in namespace 'myNamespace', including sender
+io.of('myNamespace').emit('bigger-announcement', 'the tournament will start soon');</code></pre>
+		</section>
+		<section>
+			<h2>Server API</h2>
+			<pre><code class="javascript">// sending to individual socketid (private message)
+socket.to(<socketid>).emit('hey', 'I just met you');
+
+// sending with acknowledgement
+socket.emit('question', 'do you think so?', function (answer) {});
+
+// sending without compression
+socket.compress(false).emit('uncompressed', "that's rough");</code></pre>
+		</section>
+		<section>
+			<h2>Server API</h2>
+			<pre><code class="javascript">// sending a message that might be dropped if the client is not ready to receive messages
+socket.volatile.emit('maybe', 'do you really need it?');
+
+// sending to all clients on this node (when using multiple nodes)
+io.local.emit('hi', 'my lovely babies');</code></pre>
 		</section>
 	</div>
 </div>
