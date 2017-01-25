@@ -56,4 +56,15 @@
 			console.log(dataFromBackend);
 		});
 	}, false);
+
+	const welcomeImageCanvas = document.getElementById('welcomeImageCanvas').getContext('2d');
+	socket.on('welcomeImage', (data) => {
+		if (data.image) {
+			const img = new Image();
+			img.src = `data:image/jpeg;base64,${data.buffer}`;
+			img.onload = () => {
+				welcomeImageCanvas.drawImage(img, 0, 0);
+			};
+		}
+	})
 })();

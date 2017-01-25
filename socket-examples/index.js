@@ -3,6 +3,7 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
+const fs = require('fs');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -16,6 +17,12 @@ function onConnection(socket) {
 	socket.on('emitWithAck', (data, fn) => {
 		console.log('this line is executed in the backend');
 		fn(`this line is executed in the frontend, with this string as an argument, with ${data} or backend if necessary`);
+	});
+	fs.readFile(`${__dirname}/public/rum.jpg`, (err, buffer) => {
+		socket.emit('welcomeImage', {
+			image: true,
+			buffer: buffer.toString('base64')
+		})
 	})
 }
 io.on('connection', onConnection);
