@@ -2,11 +2,13 @@
 
 (function () {
 
-	var socket = io();
-	var VIPSocket;
+	const socket = io();
+	let VIPSocket;
+	const users = [];
 
-	socket.on('newConnection', (data) => {
-		console.log(data);
+	socket.on('newConnection', (message, id) => {
+		console.log(message);
+		users.unshift(id);
 	});
 
 	// console.log(socket)
@@ -66,5 +68,16 @@
 				welcomeImageCanvas.drawImage(img, 0, 0);
 			};
 		}
-	})
+	});
+
+	const emit6 = document.getElementById('sendToLastConnected');
+	emit6.addEventListener('click', () => {
+		socket.emit('sendToLastConnected', {
+			message: `Hi, welcome user with id ${users[0]}, I am the user with id ${socket.id}`,
+			target: users[0],
+		});
+	}, false);
+	socket.on('sendToLastConnected', (msg) => {
+		console.log(msg);
+	});
 })();
