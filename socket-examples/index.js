@@ -23,6 +23,16 @@ function onConnection(socket) {
 			image: true,
 			buffer: buffer.toString('base64')
 		})
+	});
+	socket.on('newFile', (data) => {
+		if (data.image) {
+				socket.broadcast.emit('newFile',{
+					image: true,
+					buffer: data.buffer
+				})
+		}
+		console.log('we got the image', data.buffer);
+		// socket.broadcast.emit('newFile', file);
 	})
 }
 io.on('connection', onConnection);
