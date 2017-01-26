@@ -66,9 +66,8 @@ socket.on('chat message', msg => chatArray.push(msg));</code></pre>
 		</section>
 		<section>
 			<h2>Multiplexing</h2>
-			<p>Sending multiple streams of data over a communications link at the same time in the form of a single, complex signal.
-				By default, multiplex = true.
-				Calling io instantiates a Manager and returns a socket.</p>
+			<p>Some sites may want to namespace a socket (e.g send all your chat app data to one namespace, and all your regular data to a different namespace)</p>
+			<p>Data of different namespaces can be sent over a single socket</p>
 		</section>
 		<section>
 			<h2>Socket id</h2>
@@ -78,6 +77,17 @@ socket.on('chat message', msg => chatArray.push(msg));</code></pre>
 			<p>
 				Example: 8CBxbt3PrTv2yR2sAAAC
 			</p>
+		</section>
+		<section>
+			<h2>Modules: socket.io-emitter, -redis</h2>
+			<p>Emit events to sockets from outside your Socket.IO process</p>
+			<a href="https://github.com/socketio" target="_blank">https://github.com/socketio</a>
+		</section>
+		<section>
+			<h2>Loggoing and debugging</h2>
+			<p><code>localStorage.debug = '*'</code></p>
+			<p><code>localStorage.debug = 'socket.io-client:manager'</code></p>
+			<img src="assets/console.png">
 		</section>
 	</div>
 </div>
