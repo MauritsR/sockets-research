@@ -14,7 +14,8 @@
 			<blockquote>
 				&ldquo;Socket.IO is an engine that enables real-time bidirectional event-based communication. &rdquo;
 			</blockquote>
-			<img class="plain" style="width: 100px" src="https://www.pubnub.com/wp-content/uploads/2014/07/SOCKETIOICON.gif"/>
+			<img class="plain" style="width: 100px"
+				 src="https://www.pubnub.com/wp-content/uploads/2014/07/SOCKETIOICON.gif"/>
 		</section>
 		<section>
 			<h2>Background information</h2>
@@ -31,6 +32,14 @@
 				<li class="fragment">Instant messaging</li>
 				<li class="fragment">Send images, audio and video</li>
 				<li class="fragment">Concurrently edit documents</li>
+			</ul>
+		</section>
+		<section>
+			<h2>Advantages of sockets: performance</h2>
+			<ul>
+				<li>Load balancing</li>
+				<li>Smaller traffic size: no need for HTTP headers and chunked encoding frames (HTTP 1.1)</li>
+				<li>Lightweight parsing, low CPU usage: no need to figure out what kind of message it is</li>
 			</ul>
 		</section>
 		<section>
@@ -86,7 +95,8 @@ socket.on('chat message', msg => chatArray.push(msg));</code></pre>
 		</section>
 		<section>
 			<h2>Multiplexing</h2>
-			<p>Some sites may want to namespace a socket (e.g send all your chat app data to one namespace, and all your regular data to a different namespace)</p>
+			<p>Some sites may want to namespace a socket (e.g send all your chat app data to one namespace, and all your
+				regular data to a different namespace)</p>
 			<p>Data of different namespaces can be sent over a single socket</p>
 		</section>
 		<section>
@@ -109,27 +119,51 @@ socket.on('chat message', msg => chatArray.push(msg));</code></pre>
 			<p><code>localStorage.debug = 'socket.io-client:manager'</code></p>
 			<img src="assets/console.png">
 		</section>
+		<section>
+			<h2>Establishing connection</h2>
+			<p>A long-polling connection is established first. Then, Socket.IO tries to upgrade to better transports
+				that are "tested" (HTML5 WebSocket).</p>
+			<img src="assets/socket1.png">
+			<img src="assets/socket2.png">
+		</section>
+		<section>
+			<h2>Configuration object</h2>
+			<pre><code class="javascript">const socket = io({
+  autoConnect: true,
+});</code></pre>
+			<pre><code class="javascript">options: {
+  reconnection // (Boolean) whether to reconnect automatically (true)
+  reconnectionDelay //(Number) how long to initially wait before attempting a new reconnection (1000).
+  reconnectionDelayMax // (Number) maximum amount of time to wait between reconnections (5000).
+  timeout // (Number) connection timeout before a connect_error and connect_timeout events are emitted
+  autoConnect // (Boolean) by setting this false, you have to call manager.open whenever you decide it's appropriate
+}</code></pre>
+		</section>
 	</div>
 </div>
 <script src="lib/js/head.min.js"></script>
 <script src="js/reveal.js"></script>
 <script>
-Reveal.initialize({
-	controls: true,
-	progress: true,
-	history: true,
-	center: true,
-	transition: 'slide', // none/fade/slide/convex/concave/zoom // More info https://github.com/hakimel/reveal.js#dependencies
-	// More info https://github.com/hakimel/reveal.js#dependencies
-	dependencies: [
+	Reveal.initialize({
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+		transition: 'slide', // none/fade/slide/convex/concave/zoom // More info https://github.com/hakimel/reveal.js#dependencies
+		// More info https://github.com/hakimel/reveal.js#dependencies
+		dependencies: [
 //		{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
 //		{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 //		{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-		{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+			{
+				src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+				hljs.initHighlightingOnLoad();
+			}
+			},
 //		{ src: 'plugin/zoom-js/zoom.js', async: true },
 //		{ src: 'plugin/notes/notes.js', async: true }
-	]
-});
+		]
+	});
 </script>
 </body>
 
