@@ -25,13 +25,24 @@ function onConnection(socket) {
 		})
 	});
 	socket.on('newFile', (data) => {
-		if (data.image) {
-				socket.broadcast.emit('newFile',{
-					image: true,
-					buffer: data.buffer
-				})
-		}
-		console.log('we got the image', data.buffer);
+		let fileName = data.name;
+		fs.open(fileName, 'a', 0o755, (err, fd) => {
+			if (err) throw err;
+
+			fs.write(fd, data.buffer, null, 'Binary', (err, written, buff) => {
+				if (err) throw err;
+
+				fs.close(fd, () => {
+					console.log('File saved successful!');
+					fs.readFile(fileName, (err, buffer) => {
+						socket.broadcast.emit('newFile', {
+							image: true,
+							buffer: buffer.toString('base64')
+						})
+					})
+				});
+			})
+		});
 		// socket.broadcast.emit('newFile', file);
 	})
 }

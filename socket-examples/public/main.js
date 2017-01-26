@@ -72,40 +72,31 @@
 	emit6.addEventListener('click', () => {
 		const fileReader = new FileReader();
 		const selectedFile = document.getElementById('input').files[0];
-		fileReader.addEventListener('loadend', () => {
-			socket.emit('newFile', {
-				image: true,
-				buffer: fileReader.result.toString('base64')
-			})
-			// socket.emit('newFile', fileReader.result)
-		});
-		fileReader.readAsArrayBuffer(selectedFile);
+
+		fileReader.onload = function(file) {
+			console.log('Sending file...');
+			//get all content
+			let buffer = file.target.result;
+			//send the content via socket
+			socket.emit('newFile',{
+				name: 'rum',
+				buffer
+			});
+		};
+		fileReader.readAsBinaryString(selectedFile);
+
 	}, false);
 
 	const uploadImageCanvas = document.getElementById('uploadImageCanvas').getContext('2d');
 	socket.on('newFile', (file) => {
-		const img = new Image();
-		img.src = `data:image/jpeg;base64,${file.buffer}`;
-		img.onload = () => {
-			console.log(img)
-			uploadImageCanvas.drawImage(img, 0, 0);
-		};
-
-		// const blob = new Blob([file], {type: "image/jpeg"});
-		// const downloadReader = new FileReader();
-		// downloadReader.addEventListener('loadend', () => {
-		// 	console.log(downloadReader.result);
-		// 	uploadImageCanvas.drawImage(downloadReader.result, 0, 0);
-		// });
-		// downloadReader.readAsArrayBuffer(blob);
-
-		// const img = new Image();
-		// img.src = `data:image/jpeg;base64,${file}`;
-		// img.onload = () => {
-		// 	uploadImageCanvas.drawImage(img, 0, 0);
-		// };
-		// console.log('we got a new file');
-		// console.log(blob);
+		if (file.image) {
+			console.log('isFired')
+			const imag = new Image();
+			imag.onload = () => {
+				uploadImageCanvas.drawImage(imag, 0, 0);
+			};
+			imag.src = `data:image/jpeg;base64,${file.buffer}`;
+		}
 	})
 
 })();
