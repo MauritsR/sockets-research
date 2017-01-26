@@ -65,6 +65,26 @@ socket.emit('chat message', 'Wooh Awesomeeee');
 socket.on('chat message', msg => chatArray.push(msg));</code></pre>
 		</section>
 		<section>
+			<h2>Emitting events</h2>
+			<pre><code>socket.emit(eventName[, ...args][, ack])</code></pre>
+			<pre><code>socket.emit('redButtonClicked', {
+  data1: 'pizza',
+  data2: 'form'
+});</code></pre>
+		</section>
+		<section>
+			<h2>Reserved events</h2>
+			<ul>
+				<li>error</li>
+				<li>connect</li>
+				<li>disconnect</li>
+				<li>disconnecting</li>
+				<li>newListener</li>
+				<li>removeListener</li>
+				<li>ping</li>
+				<li>pong</li>
+		</section>
+		<section>
 			<h2>Multiplexing</h2>
 			<p>Some sites may want to namespace a socket (e.g send all your chat app data to one namespace, and all your regular data to a different namespace)</p>
 			<p>Data of different namespaces can be sent over a single socket</p>
