@@ -10,7 +10,7 @@ app.use(express.static(__dirname + '/public'));
 // Default namespace
 function onConnection(socket) {
 	// console.log(socket.id)
-	socket.broadcast.emit('newConnection', 'hi! Someone else has connected!');
+	socket.broadcast.emit('newConnection', `hi! Someone else has connected with id ${socket.id}`, socket.id);
 	socket.on('emitMsgBack', (data) => socket.emit('emitMsgBack', `This was your message: ${data}`));
 	socket.on('emitToOthers', (data) => socket.broadcast.emit('emitToOthers', `This was your message: ${data}`));
 	socket.on('disconnect', () => socket.broadcast.emit('disconnectedClient', 'hi! Someone has disconnected!'));
@@ -23,6 +23,9 @@ function onConnection(socket) {
 			image: true,
 			buffer: buffer.toString('base64')
 		})
+	});
+	socket.on('sendToLastConnected', (data) => {
+		socket.to(data.target).emit('sendToLastConnected' , data.message);
 	})
 }
 io.on('connection', onConnection);
