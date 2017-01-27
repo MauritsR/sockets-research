@@ -1,9 +1,9 @@
 <html>
 
 <head>
-	<link rel="stylesheet" href="css/reveal.css">
-	<link rel="stylesheet" href="css/theme/beige.css">
-	<link rel="stylesheet" href="lib/css/zenburn.css">
+	<link rel="stylesheet" href="presentation/css/reveal.css">
+	<link rel="stylesheet" href="presentation/css/theme/beige.css">
+	<link rel="stylesheet" href="presentation/lib/css/zenburn.css">
 </head>
 
 <body>
@@ -117,14 +117,14 @@ socket.on('chat message', msg => chatArray.push(msg));</code></pre>
 			<h2>Logging and debugging</h2>
 			<p><code>localStorage.debug = '*'</code></p>
 			<p><code>localStorage.debug = 'socket.io-client:manager'</code></p>
-			<img src="assets/console.png">
+			<img src="presentation/assets/console.png">
 		</section>
 		<section>
 			<h2>Establishing connection</h2>
 			<p>A long-polling connection is established first. Then, Socket.IO tries to upgrade to better transports
 				that are "tested" (HTML5 WebSocket).</p>
-			<img src="assets/socket1.png">
-			<img src="assets/socket2.png">
+			<img src="presentation/assets/socket1.png">
+			<img src="presentation/assets/socket2.png">
 		</section>
 		<section>
 			<h2>Configuration object</h2>
@@ -141,8 +141,8 @@ socket.on('chat message', msg => chatArray.push(msg));</code></pre>
 		</section>
 	</div>
 </div>
-<script src="lib/js/head.min.js"></script>
-<script src="js/reveal.js"></script>
+<script src="presentation/lib/js/head.min.js"></script>
+<script src="presentation/js/reveal.js"></script>
 <script>
 	Reveal.initialize({
 		controls: true,
