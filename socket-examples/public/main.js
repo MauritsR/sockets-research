@@ -2,7 +2,9 @@
 
 (function () {
 
-	const socket = io();
+	const socket = io({
+		autoConnect: true,
+	});
 	let VIPSocket;
 	const users = [];
 
